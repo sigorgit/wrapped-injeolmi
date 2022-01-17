@@ -23,7 +23,7 @@ contract InjeolmiSender is Ownable, IInjeolmiSender {
     }
 
     function sendOverHorizon(uint256 toChain, address receiver, uint256 amount) public returns (uint256) {
-        mix.transferFrom(msg.sender, address(this), amount);
+        injeolmi.transferFrom(msg.sender, address(this), amount);
         
         uint256[] storage sendedAmounts = sended[msg.sender][toChain][receiver];
         uint256 sendId = sendedAmounts.length;
@@ -42,7 +42,8 @@ contract InjeolmiSender is Ownable, IInjeolmiSender {
         require(signature.length == 65, "invalid signature length");
         require(!received[msg.sender][fromChain][sender][sendId]);
 
-        bytes32 hash = keccak256(abi.encodePacked(msg.sender, fromChain, 8217, sender, sendId, amount));
+        uint256 toChain = 8217;
+        bytes32 hash = keccak256(abi.encodePacked(msg.sender, fromChain, toChain, sender, sendId, amount));
         bytes32 message = keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", hash));
 
         bytes32 r;
@@ -63,7 +64,7 @@ contract InjeolmiSender is Ownable, IInjeolmiSender {
 
         require(ecrecover(message, v, r, s) == signer);
 
-        mix.transfer(msg.sender, amount);
+        injeolmi.transfer(msg.sender, amount);
 
         received[msg.sender][fromChain][sender][sendId] = true;
         emit ReceiveOverHorizon(msg.sender, fromChain, sender, sendId, amount);

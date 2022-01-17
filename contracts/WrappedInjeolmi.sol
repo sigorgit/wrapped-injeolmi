@@ -12,7 +12,7 @@ contract WrappedInjeolmi is Ownable, FungibleToken, IWrappedInjeolmi {
     mapping(address => mapping(uint256 => mapping(address => uint256[]))) public sended;
     mapping(address => mapping(uint256 => mapping(address => mapping(uint256 => bool)))) public received;
 
-    constructor(address _signer) FungibleToken("Ethereum Mix", "EMIX", "1") {
+    constructor(address _signer) FungibleToken("Wrapped Injeolmi", "WIJM", "1") {
         signer = _signer;
     }
 
