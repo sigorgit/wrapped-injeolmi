@@ -30,6 +30,16 @@ const config: HardhatUserConfig = {
       accounts: [process.env.ADMIN || ''],
       chainId: 1,
     },
+    polygon: {
+      url: "https://polygon-rpc.com/",
+      accounts: [process.env.ADMIN || ''],
+      chainId: 137,
+    },
+    bsc: {
+      url: "https://bsc-dataseed.binance.org",
+      accounts: [process.env.ADMIN || ''],
+      chainId: 56,
+    },
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY
